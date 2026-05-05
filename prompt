@@ -2,4 +2,74 @@ Today we are going to recreate a project that I created on another machine. This
 be clear. The kicker is that this project is going to be created entirely from modular skills, commands, and a CLAUDE.md file. Today we will make an MVP version of this     
 project but we will be building with the mindset that this project will be expanded to become its own sharable application. The beauty of this project which I'd like to     
 maintain is that it is light weight and easily sharable.                                                                                                                     
-                                                                                                                                                                               
+
+So here is the project. KT-Agent is a knowledge ingestion and sharing application where Users and document their "domain knowledge" (project docs, workflows, troubleshooting experiences, anything they want really), and consumers can interact with the 'kt-agent' to ask questions and converse with an agent who pulls information only from the created knowledge base.
+
+There are two personas who will interact with this project, users and consumers.
+
+Users are those who add to the knowledge base. There are a variety of ways in which we can grow the knowledge base. The two methods we will focus on for the MVP is by uploading files or from an agent lead interview. As a cosmetic feature, the program also maintains a persona.md file which contains an overview of the agents domain knowledge and can even record and replicate the user's communication style as it learns from interviews.
+
+Consumers are those who interact with the KT-agent to discuss problems or try to learn from some of the knowledge stored in the knowledge base. This should be managed from an /agent file created in this repo which can be called on command. The agent should use metadata to pull relevant files from the knowledge base dynamically based on the scope of the questions.
+
+Technical specs:
+structure:
+.claude/
+|
+|-> agents/ kt-agent.md
+|
+|-> commands/
+|        |
+|        |-> ingest.md
+|        |-> interview.md
+|        |-> cleanse.md
+|
+|-> skills/
+|        |
+|        |-> persona/SKILL.md
+|
+Inbox/
+    |->processed/
+knowledge/
+    |
+    |-> projects/ .gitkeep
+    |-> references/ .gitkeep
+    |-> troubleshooting/ .gitkeep
+    |-> workflows/ .gitkeep
+CLAUDE.md
+config.yaml
+persona.md
+
+Agent:
+kt-agent describes how the agent will interact with CONSUMERS and how to use the knowledge base to answer questions and the persona.md to gain tone
+
+Commands:
+ingest - ingests all files in inbox/ then creates markdown files based on the content and distributes those files into their appropriate place within the knowledge folder. This command has a lot of responsibility handling all types of files and recognizing ceratin tags from cleanse and interview. It may become more practical to break up this command to distribute responsibility. after files are processed and added to the knowledge base, they are moved to inbox/processed/. Interview tags encourage the command to call the persona skill to update communication style based on an interview. The ingest command can also receive files with an accompanying side car from the cleanse skill. The files should be paired together with the side car containing suggested changes from request.
+interview - conducts an interview with a user either on a topic decided by the user or one you get from a question. Interviews should generally stay to one topic with focused questions to keep responses from being too long and to get good coverage on one topic. interviews should average 5-8 questions. Users can string interviews together if they want. Each topic should have its own annotated transcript which will be passed directly into the inboxfolder as a markdown file. this will have an interview tag.
+cleanse - this command has 2 potential uses. It's either called after an ingest automatically to evaluate the new files entering the knowledge base to maintain a maximum threshhold of redundancy, uphold file organization, and evaluate metadata and its relevance to each file. If changes need to be made, they are passed back into the inbox folder with a sidecar file which describes the changes suggested by the cleanse command.
+
+Skills:
+persona - persona is a skill that can be implicitly called by other commands to evaluate a file that is being processed and update the persona.md file which documents general knowlege topics and communication style of the user. Maintaining an accurate catalog/overview of the knowledge contained in the knowledge base is more important than updating the personality details of the agent.
+
+Knowledge - this is the base directory for the entire knowledge base. For now this will contain subdirectories which contain markdown files with metadata. This may later be replaced with a more sophisticated system
+knowledge/projects - knowledge related to architecture, design and contect for specific systems or applications
+knowledge/references - reference material, links, glossary terms, and quick lookups
+knowledge/troubleshooting - descriptions of issues encountered and steps which lead to the solution
+knowledge/workflows - daily and recurring operational procedures run by the user
+
+CLAUDE.md - a descripton of the project and instructions for which files to load upon session start and how users will interact with the agent. also lists the skills available and important specs.
+
+config.yaml - Details pertaining to the project and its file structure. (I'm not so sure this is actually essential to the project)
+
+persona.md - an overview of who the user is, lists and descriptions of general areas of expertise and details about communication style. This can be modified by the user but should generally be completed dynamically as users interact with the project.
+
+General Notes about the project:
+All skills and commands should be modular and have independent responsibilities. They should reference eachother to accomplish more complex workflows. Keep the scope of commands and skills small. Split them up when their scope creeps beyond one task. This project should remain light weight and transportable into anyones existing projects. Do not allow  skills or commands to develop overlapping responsibilities. Prioritize meta data especially summaries for skills and knowlege files as they will be used for discovery.
+
+Value from project (personal):
+This is a learning project for me where I am practicing developing an entirely Agent driven project to explore the possibilities. As we develop together, I want you to explain design desicions and offer suggestions listing pros and cons for options keeping scalibility and maximum learning in mind. We will also consider creating a documentation file in a gitignore file to document our process so that it can be added to a KT agent in the future.
+
+Value from the project (as a product):
+In my opinion, the real innovation in this project is a new way to ingest and document domain knowledge. No body likes writing docs for their code or spending lots of time writing out workflows they've developed for others to follow. This project offers a solution to that. When considering expansion and scale for this project, we will likely focus on this aspect of the project. That being said, the ingest and cleanse commands are crutial for creating a maintainable "database" of .md files. At least until I maybe move to a rag system (not part of mvp)
+
+Developemnt from you:
+Create a plan to implement this, Focus on MVP before getting distracted by nice to have features or scaling. Ask as many clarifying questions as you need. I will clarify descriptions and uses of any features I've described. I can answer questions about the desired workflows we will use. Ask about how this project will be used. Ask about any edge cases you think of. Always make your assumptions clear in your responses. Include proposed suggestions with a case for the change youre suggesting, or a case against a change I'm suggesting. Do not agree with me if I am proposing patterns that do not follow open standards. Create a CLAUDE.md file for use during the development of this project then a separate file which will replace the CLAUDE.md file when we publish this project. 

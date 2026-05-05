@@ -1,0 +1,3 @@
+inbox/processed/*
+!inbox/processed/.gitkeep
+knowledge/.last-ingest.log
