@@ -1,0 +1,5 @@
+Today we are going to recreate a project that I created on another machine. This project is called KT-Agent. KT stands for knowledge transfer and the agent portion should  
+be clear. The kicker is that this project is going to be created entirely from modular skills, commands, and a CLAUDE.md file. Today we will make an MVP version of this     
+project but we will be building with the mindset that this project will be expanded to become its own sharable application. The beauty of this project which I'd like to     
+maintain is that it is light weight and easily sharable.                                                                                                                     
+                                                                                                                                                                               
