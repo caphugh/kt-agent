@@ -1,13 +1,13 @@
 ---
 name: cleanse
-description: Audit the knowledge base for quality issues (redundancy, miscategorization, vague metadata, oversized files). Outputs correction sidecars to inbox/ for processing by /ingest.
+description: Audit the knowledge base for quality issues (redundancy, miscategorization, vague metadata, oversized files). Outputs correction sidecars to inbox/ for processing by /kt-agent/ingest.
 ---
 
 # Cleanse Command
 
 ## Purpose
 
-Audit the knowledge base for quality and consistency issues. Does NOT modify knowledge files directly — instead, outputs sidecar files to `inbox/` with suggested corrections. User then runs `/ingest` to apply them. This preserves the single-writer principle.
+Audit the knowledge base for quality and consistency issues. Does NOT modify knowledge files directly — instead, outputs sidecar files to `inbox/` with suggested corrections. User then runs `/kt-agent/ingest` to apply them. This preserves the single-writer principle.
 
 ## Modes
 
@@ -162,7 +162,7 @@ After generating all sidecars, output:
 >   - Scope (split): {count}
 >   - INDEX sync: {count} (informational)
 >
-> Sidecar files written to `inbox/`. Run `/ingest` to apply corrections.
+> Sidecar files written to `inbox/`. Run `/kt-agent/ingest` to apply corrections.
 
 If no issues found:
 > **Cleanse audit complete.** No issues found. Knowledge base is clean.

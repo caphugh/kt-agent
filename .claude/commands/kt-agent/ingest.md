@@ -1,6 +1,6 @@
 ---
 name: ingest
-description: Process all files in inbox/, normalize, categorize, and write to the knowledge base. Sole writer to knowledge/. Orchestrates parse, categorize, and persona skills.
+description: Process all files in inbox/, normalize, categorize, and write to the knowledge base. Sole writer to knowledge/. Orchestrates kt-agent:parse, kt-agent:categorize, and kt-agent:persona skills.
 ---
 
 # Ingest Command
@@ -21,7 +21,7 @@ Group files:
 - **Orphan sidecars** — `*.sidecar.md` with no matching raw file in inbox (these target existing knowledge files)
 
 If no files found:
-> No files in inbox/. Add files to `inbox/` or run `/interview` to generate content.
+> No files in inbox/. Add files to `inbox/` or run `/kt-agent/interview` to generate content.
 
 Exit.
 
@@ -47,7 +47,7 @@ Read sidecar frontmatter if present to determine `action` type:
 
 #### Step B — Parse
 
-Call the **parse skill** with:
+Call the **kt-agent:parse skill** with:
 - File content (the input determined in Step A)
 - Original filename
 
@@ -73,7 +73,7 @@ If a sidecar exists, apply its instructions to the parsed content:
 
 #### Step D — Categorize
 
-Call the **categorize skill** with:
+Call the **kt-agent:categorize skill** with:
 - Parsed (and potentially merged) markdown content
 - Original filename
 - Source type: determine from file frontmatter or context:
@@ -120,7 +120,7 @@ After ALL files are processed:
 - Determine aggregate source type:
   - If ANY file had source `interview` → source type = `interview`
   - Otherwise → source type = `upload`
-- Call the **persona skill** with the collected outputs + source type
+- Call the **kt-agent:persona skill** with the collected outputs + source type
 
 ---
 
@@ -169,7 +169,7 @@ knowledge/projects/new-file.md
 knowledge/workflows/another-file.md
 ```
 
-This file is used by `/cleanse` default mode to scope its audit.
+This file is used by `/kt-agent/cleanse` default mode to scope its audit.
 
 ---
 
@@ -183,12 +183,12 @@ Output summary to user:
 > - Splits: {number of files that were split, if any}
 > - Skipped: {files skipped due to unsupported format, if any}
 >
-> Run `/cleanse` to audit the new additions for quality.
+> Run `/kt-agent/cleanse` to audit the new additions for quality.
 
 ## Constraints
 
 - This command is the SOLE WRITER to `knowledge/`
-- Skills are called in order: parse → categorize → persona
+- Skills are called in order: kt-agent:parse → kt-agent:categorize → kt-agent:persona
 - Never skip the INDEX regeneration step
 - Never move unsupported-format files to processed
 - Persona is called ONCE at the end with ALL outputs, not per-file

@@ -1,6 +1,6 @@
 ---
 name: interview
-description: Conduct a focused knowledge interview with the user on a single topic. Outputs an annotated transcript to inbox/ for later processing by /ingest.
+description: Conduct a focused knowledge interview with the user on a single topic. Outputs an annotated transcript to inbox/ for later processing by /kt-agent/ingest.
 ---
 
 # Interview Command
@@ -86,7 +86,7 @@ Where:
 ### Step 6: Inform User
 
 > Transcript saved to `inbox/interview-{topic-slug}-{date}.md`.
-> Run `/ingest` to process it into the knowledge base.
+> Run `/kt-agent/ingest` to process it into the knowledge base.
 >
 > Want to do another interview on a different topic?
 

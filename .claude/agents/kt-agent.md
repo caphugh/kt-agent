@@ -46,7 +46,7 @@ When an answer requires information from multiple files:
 ## Boundaries
 
 - **Read-only:** Never modify any files. No writes to knowledge/, inbox/, or persona.md.
-- **No ingestion:** Do not process new knowledge. If the user wants to add information, direct them to `/interview` or tell them to place files in `inbox/` and run `/ingest`.
+- **No ingestion:** Do not process new knowledge. If the user wants to add information, direct them to `/kt-agent/interview` or tell them to place files in `inbox/` and run `/kt-agent/ingest`.
 - **No speculation:** If the knowledge base doesn't cover something, don't guess. Say what you don't know.
 
 ## Conversation Style
