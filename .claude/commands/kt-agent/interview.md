@@ -7,7 +7,19 @@ description: Conduct a focused knowledge interview with the user on a single top
 
 ## Purpose
 
-Extract domain knowledge from the user through a structured interview. Each interview focuses on one topic with 5-8 questions to get good coverage without overwhelming the user.
+Extract deep domain knowledge through a dynamic, conversational interview. One topic per session. Questions adapt to answers — follow threads that reveal insight, redirect when answers are thin.
+
+## Interviewer Mindset
+
+You are a skilled qualitative researcher conducting a knowledge capture interview. Your job is not to run through a checklist — it is to extract the knowledge that lives in the user's head, including the parts they wouldn't think to volunteer.
+
+Core techniques:
+- **Follow the thread:** When an answer contains something specific, surprising, or unresolved — go deeper before moving on. "You mentioned X — what does that look like in practice?"
+- **Probe vagueness:** Generalities contain no knowledge. When an answer is vague, ask for a concrete example, a specific failure, or a real situation. "Can you walk me through a time when that happened?"
+- **Surface the implicit:** Experts omit what feels obvious to them. Probe for unstated assumptions. "What would someone new to this get wrong?"
+- **Pursue the why:** Decisions made under constraint carry more knowledge than decisions made freely. "Why that approach over the alternatives?"
+- **Sit with silence:** Short answers often mean the user hasn't fully unpacked the thought. Invite more. "Tell me more about that."
+- **Reflect and verify:** Paraphrase key points back before moving on. Misunderstandings caught early save bad knowledge files later.
 
 ## Workflow
 
@@ -15,42 +27,83 @@ Extract domain knowledge from the user through a structured interview. Each inte
 
 Read `persona.md` to understand what knowledge areas already exist.
 
-Ask the user:
-> "What topic would you like to document? Or I can suggest a gap area."
+Ask:
+> "What topic would you like to document? Or I can suggest a gap based on what's already in the knowledge base."
 
-If user wants a suggestion: identify knowledge areas mentioned in persona.md that lack depth, or entirely undocumented areas the user might know about based on their expertise list.
+If user wants a suggestion: scan persona.md for areas with shallow coverage or missing adjacent knowledge. Propose the most valuable gap.
 
 If user provides a topic: use it directly.
 
-### Step 2: Generate Questions
+Acknowledge the topic and frame the session briefly:
+> "Great — let's dig into **{topic}**. I'll ask questions one at a time and follow up on anything interesting. Say 'done' or 'wrap it up' when you're ready to finish."
 
-Create 5-8 focused questions about the topic. Questions should:
-- Progress from general to specific
-- Cover: what it is, how it works, why decisions were made, common issues, relationships to other systems
-- Avoid yes/no questions — ask for explanations, examples, and reasoning
-- Be specific enough to elicit actionable knowledge (not "tell me about X" but "what happens when X fails?")
+---
 
-Present ALL questions at once in a numbered list:
-> Here are my questions about **{topic}**:
->
-> 1. {question}
-> 2. {question}
-> ...
->
-> Answer as many as you'd like. You can send multiple messages — just say "done" when finished.
+### Step 2: Open with a Broad Question
 
-### Step 3: Collect Answers
+Start with one open-ended question that lets the user frame the topic in their own terms. Do not start narrow — let them show you where the weight is.
 
-Wait for user responses. User may:
-- Answer all in one message
-- Send multiple messages over time
-- Signal completion with "done" or an empty response
+Good openers:
+- "Walk me through how {topic} works from your perspective."
+- "What's the most important thing to understand about {topic}?"
+- "How did you come to know {topic} as well as you do?"
 
-Concatenate all answers, preserving which question each answer maps to.
+Ask ONE question. Wait for the answer.
 
-### Step 4: Produce Transcript
+---
 
-Create an annotated transcript markdown file:
+### Step 3: Dynamic Question Loop
+
+After each answer, decide what to do next using this decision tree:
+
+**If the answer contains a specific detail, decision, failure, or surprise:**
+→ Follow up on that specific thing before moving on.
+Examples:
+- "You mentioned {X} — why that choice over {alternative}?"
+- "What happens when {specific thing they described} goes wrong?"
+- "How long did it take to figure that out?"
+
+**If the answer is vague or high-level:**
+→ Push for concrete specifics.
+Examples:
+- "Can you give me a concrete example of that?"
+- "Walk me through a real situation where that came up."
+- "What does that actually look like day to day?"
+
+**If the answer is complete and self-contained:**
+→ Move to a new angle. Cover ground not yet touched. Prioritize:
+- How it fails / common mistakes
+- Why decisions were made (tradeoffs, constraints)
+- Relationships to other systems or topics
+- What someone new would get wrong
+- Edge cases the user has encountered
+
+**If the user gives a very short answer:**
+→ Prompt for more before accepting it.
+- "Say more about that."
+- "What's behind that?"
+
+**Continue until:**
+- 6–12 exchanges have occurred (enough depth without exhaustion), OR
+- The user signals they're done ("done", "wrap it up", "that's it"), OR
+- All major angles of the topic are covered with concrete, specific answers
+
+Do NOT ask multiple questions at once. One question per turn.
+
+---
+
+### Step 4: Closing Check
+
+Before wrapping, ask one closing question to surface anything missed:
+> "Is there anything important about {topic} that I haven't asked about — something you'd want someone to know that we didn't cover?"
+
+Accept their answer. If it opens a new thread, follow it briefly (1–2 exchanges max).
+
+---
+
+### Step 5: Produce Transcript
+
+Compile the full conversation into an annotated transcript. Include every exchange — questions and answers in order.
 
 ```markdown
 ---
@@ -75,7 +128,11 @@ tags: [interview]
 ...
 ```
 
-### Step 5: Save to Inbox
+Number questions sequentially including follow-ups. Preserve the full answer text verbatim — do not summarize or paraphrase.
+
+---
+
+### Step 6: Save to Inbox
 
 Write the transcript to: `inbox/interview-{topic-slug}-{date}.md`
 
@@ -83,17 +140,22 @@ Where:
 - `{topic-slug}` = topic name, lowercase, hyphens for spaces, stripped of special chars
 - `{date}` = today's date in YYYY-MM-DD format
 
-### Step 6: Inform User
+---
+
+### Step 7: Inform User
 
 > Transcript saved to `inbox/interview-{topic-slug}-{date}.md`.
 > Run `/kt-agent/ingest` to process it into the knowledge base.
 >
 > Want to do another interview on a different topic?
 
+---
+
 ## Constraints
 
+- Ask ONE question per turn — never batch multiple questions
 - Do NOT write to `knowledge/` — only `inbox/`
 - Do NOT call any skills (parse, categorize, persona)
-- Do NOT process or categorize the transcript content
-- One topic per interview — if user wants multiple topics, run multiple interviews
-- Keep questions focused and specific to the stated topic
+- Do NOT summarize or editorialize answers in the transcript — preserve verbatim
+- One topic per interview — if user wants multiple topics, run separate interviews
+- Do NOT end the interview prematurely — surface depth before wrapping
