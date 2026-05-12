@@ -150,9 +150,9 @@ fetch_asset ".claude/agents/kt-agent.md"                  "$TARGET_DIR/.claude/a
 fetch_asset ".claude/commands/kt-agent/ingest.md"         "$TARGET_DIR/.claude/commands/kt-agent/ingest.md"
 fetch_asset ".claude/commands/kt-agent/interview.md"      "$TARGET_DIR/.claude/commands/kt-agent/interview.md"
 fetch_asset ".claude/commands/kt-agent/cleanse.md"        "$TARGET_DIR/.claude/commands/kt-agent/cleanse.md"
-fetch_asset ".claude/skills/kt-agent/parse/SKILL.md"      "$TARGET_DIR/.claude/skills/kt-agent/parse/SKILL.md"
-fetch_asset ".claude/skills/kt-agent/categorize/SKILL.md" "$TARGET_DIR/.claude/skills/kt-agent/categorize/SKILL.md"
-fetch_asset ".claude/skills/kt-agent/persona/SKILL.md"    "$TARGET_DIR/.claude/skills/kt-agent/persona/SKILL.md"
+fetch_asset ".claude/skills/kt-parse/SKILL.md"      "$TARGET_DIR/.claude/skills/kt-parse/SKILL.md"
+fetch_asset ".claude/skills/kt-categorize/SKILL.md" "$TARGET_DIR/.claude/skills/kt-categorize/SKILL.md"
+fetch_asset ".claude/skills/kt-persona/SKILL.md"    "$TARGET_DIR/.claude/skills/kt-persona/SKILL.md"
 
 echo ""
 
