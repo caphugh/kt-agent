@@ -21,9 +21,9 @@ On every session, read:
 .claude/commands/kt-agent/ingest.md    — Processes inbox → knowledge base (sole writer)
 .claude/commands/kt-agent/interview.md — Conducts knowledge interviews → inbox
 .claude/commands/kt-agent/cleanse.md   — Audits knowledge quality → correction sidecars
-.claude/skills/kt-agent/parse/         — Converts raw files to markdown
-.claude/skills/kt-agent/categorize/    — Assigns category, metadata, splits multi-topic
-.claude/skills/kt-agent/persona/       — Updates persona.md
+.claude/skills/kt-parse/               — Converts raw files to markdown
+.claude/skills/kt-categorize/          — Assigns category, metadata, splits multi-topic
+.claude/skills/kt-persona/             — Updates persona.md
 inbox/                                 — Drop zone for files to be processed
 inbox/processed/                       — Originals moved here after ingest
 knowledge/                             — The knowledge base
@@ -40,7 +40,7 @@ persona.md                             — Agent personality and domain overview
 | Command | Purpose |
 |---------|---------|
 | `/kt-agent/interview` | Conduct a focused knowledge interview on one topic. Outputs transcript to inbox/. |
-| `/kt-agent/ingest` | Process all inbox files into the knowledge base. Calls kt-agent:parse → kt-agent:categorize → kt-agent:persona skills. |
+| `/kt-agent/ingest` | Process all inbox files into the knowledge base. Calls kt-parse → kt-categorize → kt-persona skills. |
 | `/kt-agent/cleanse` | Audit knowledge base quality. Outputs correction sidecars to inbox/. |
 
 ## Agent
